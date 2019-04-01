@@ -1,0 +1,22 @@
+table {
+  border-collapse: collapse;
+  margin: auto;
+}
+
+div {
+  float: left;
+  font-size: 30px;
+  color: blue;
+}
+
+td {
+  border: 3px solid white;
+  background-color: black;
+  text-align: center;
+  padding: 50px;
+  height: 100px;
+  width: 100px;
+  color: #ffffff;
+  font-size: 80px;
+  border-radius: 10px;
+}

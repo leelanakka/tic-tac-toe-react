@@ -32,6 +32,10 @@ class App extends React.Component {
     ));
   }
 
+  isGameDraw() {
+    return this.player1.moves.length + this.player2.moves.length === 9;
+  }
+
   isMovePresent(i, j) {
     return (
       this.players[0].getMoves().includes(i * 3 + j) ||
@@ -51,7 +55,10 @@ class App extends React.Component {
       if (this.players[0].isWin(this.winningChances)) {
         this.isGameFinished = true;
         state.turn = this.players[1].name + " won the game";
-        return { moves };
+      }
+
+      if (this.isGameDraw()) {
+        state.turn = "game has drawn";
       }
       return { moves };
     });

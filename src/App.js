@@ -4,8 +4,8 @@ import Player from "./Player";
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.player1 = new Player("leela");
-    this.player2 = new Player("prasanth");
+    this.player1 = new Player("leela", "X");
+    this.player2 = new Player("prasanth", "O");
     this.winningChances = [
       [0, 1, 2],
       [3, 4, 5],
@@ -19,7 +19,6 @@ class App extends React.Component {
     this.players = [this.player1, this.player2];
     this.state = {
       moves: [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]],
-      symbols: ["X", "O"],
       turn: this.players[0].name + " turn"
     };
   }
@@ -32,18 +31,6 @@ class App extends React.Component {
     ));
   }
 
-  isSubset(set1, set2) {
-    return set2.every(element => {
-      return set1.includes(element);
-    });
-  }
-
-  isWin(moves) {
-    return this.winningChances.some(list => {
-      return this.isSubset(moves, list);
-    });
-  }
-
   isMovePresent(i, j) {
     return (
       !this.players[0].getMoves().includes(i * 3 + j) &&
@@ -53,26 +40,25 @@ class App extends React.Component {
 
   insertMove(i, j) {
     this.setState(state => {
-      const { moves, symbols } = state;
+      const { moves } = state;
       if (this.isMovePresent(i, j)) {
-        symbols.push(symbols.shift());
         this.players.push(this.players.shift());
-        moves[i][j] = symbols[0];
+        moves[i][j] = this.players[0].symbol;
         state.turn = this.players[0].name + " turn";
         this.players[0].addMove(i * 3 + j);
       }
-      if (this.isWin(this.players[0].getMoves())) {
+      if (this.players[0].isWin(this.winningChances)) {
         state.turn = this.players[1].name + " won the game";
-        return { moves, symbols };
+        return { moves };
       }
-      return { moves, symbols };
+      return { moves };
     });
   }
 
   render() {
     return (
-      <div>
-        <p1>{this.state.turn}</p1>
+      <div className="table">
+        <div className="message">{this.state.turn}</div>
         <table>
           <tbody>
             {this.state.moves.map((x, row) => {

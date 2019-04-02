@@ -1,11 +1,21 @@
-table {
+body,
+html {
+  width: 100%;
+  height: 100%;
+}
+
+table,
+tbody {
+  width: 50%;
+  height: 80%;
+
   border-collapse: collapse;
   margin: auto;
 }
 
 div {
   float: left;
-  font-size: 30px;
+  font-size: 15px;
   color: blue;
 }
 
@@ -13,10 +23,34 @@ td {
   border: 3px solid white;
   background-color: black;
   text-align: center;
-  padding: 50px;
-  height: 100px;
-  width: 100px;
+  height: 33%;
+  width: 33%;
+
   color: #ffffff;
-  font-size: 80px;
-  border-radius: 10px;
+  font-size: 40px;
+  border-radius: 8%;
+}
+
+.main {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.table {
+  width: 50%;
+  height: 50%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.message {
+  font-size: 25px;
+  text-shadow: 0.5px 0.5px 0.5px rgb(53, 51, 51);
 }

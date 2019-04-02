@@ -6,6 +6,7 @@ class App extends React.Component {
     super(props);
     this.player1 = new Player("leela", "X");
     this.player2 = new Player("prasanth", "O");
+    this.isGameFinished = false;
     this.winningChances = [
       [0, 1, 2],
       [3, 4, 5],
@@ -33,21 +34,22 @@ class App extends React.Component {
 
   isMovePresent(i, j) {
     return (
-      !this.players[0].getMoves().includes(i * 3 + j) &&
-      !this.players[1].getMoves().includes(i * 3 + j)
+      this.players[0].getMoves().includes(i * 3 + j) ||
+      this.players[1].getMoves().includes(i * 3 + j)
     );
   }
 
   insertMove(i, j) {
     this.setState(state => {
       const { moves } = state;
-      if (this.isMovePresent(i, j)) {
+      if (!this.isMovePresent(i, j) && !this.isGameFinished) {
         this.players.push(this.players.shift());
         moves[i][j] = this.players[0].symbol;
         state.turn = this.players[0].name + " turn";
         this.players[0].addMove(i * 3 + j);
       }
       if (this.players[0].isWin(this.winningChances)) {
+        this.isGameFinished = true;
         state.turn = this.players[1].name + " won the game";
         return { moves };
       }

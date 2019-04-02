@@ -6,7 +6,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       moves: [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]],
-      symbols: ["X", "O"]
+      symbols: ["X", "O"],
+      turn: ""
     };
     this.player1 = new Player("leela");
     this.player2 = new Player("prasanth");
@@ -51,9 +52,11 @@ class App extends React.Component {
         this.players.push(this.players.shift());
         moves[i][j] = symbols[0];
         this.players[0].addMove(i * 3 + j);
+        this.state.turn = this.players[0].name + " turn";
       }
       if (this.isWin(this.players[0].getMoves())) {
-        alert(this.players[0].name+"won the game");
+        alert(this.players[0].name + "won the game");
+        return { moves, symbols };
       }
       return { moves, symbols };
     });
@@ -61,13 +64,16 @@ class App extends React.Component {
 
   render() {
     return (
-      <table>
-        <tbody>
-          {this.state.moves.map((x, row) => {
-            return <tr key={row + "1" + row}> {this.createRow(x, row)}</tr>;
-          })}
-        </tbody>
-      </table>
+      <div>
+        <p1>{this.state.turn}</p1>
+        <table>
+          <tbody>
+            {this.state.moves.map((x, row) => {
+              return <tr key={row + "1" + row}> {this.createRow(x, row)}</tr>;
+            })}
+          </tbody>
+        </table>
+      </div>
     );
   }
 }

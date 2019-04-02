@@ -1,16 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import App from "./App";
 
-const moves = [["X","O", "X"], ["X", "O", "X"], ["O", "X", "O"]];
-
-function createRow(row) {
-  return row.map(x => <td>{x}</td>);
+function Game() {
+  return (
+    <div>
+      <form>
+        PlayerName:
+        <input type="text" name="name" />
+        <input type="submit" value="Submit" />
+      </form>
+      <App />
+    </div>
+  );
 }
 
-function Table() {
-  return moves.map(x => {
-    return <tr>{createRow(x)}</tr>;
-  });
-}
-
-ReactDOM.render(<Table />, document.getElementById("root"));
+ReactDOM.render(<Game />, document.getElementById("root"));

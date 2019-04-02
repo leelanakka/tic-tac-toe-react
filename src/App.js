@@ -56,9 +56,15 @@ class App extends React.Component {
   }
 
   render() {
-    return this.state.moves.map((x, row) => {
-      return <tr key={row + "1" + row}> {this.createRow(x, row)}</tr>;
-    });
+    return (
+      <table>
+        <tbody>
+          {this.state.moves.map((x, row) => {
+            return <tr key={row + "1" + row}> {this.createRow(x, row)}</tr>;
+          })}
+        </tbody>
+      </table>
+    );
   }
 }
 

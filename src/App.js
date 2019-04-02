@@ -4,11 +4,6 @@ import Player from "./Player";
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      moves: [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]],
-      symbols: ["X", "O"],
-      turn: ""
-    };
     this.player1 = new Player("leela");
     this.player2 = new Player("prasanth");
     this.winningChances = [
@@ -22,6 +17,11 @@ class App extends React.Component {
       [2, 4, 6]
     ];
     this.players = [this.player1, this.player2];
+    this.state = {
+      moves: [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]],
+      symbols: ["X", "O"],
+      turn: this.players[0].name + " turn"
+    };
   }
 
   createRow(row, j) {
@@ -44,18 +44,25 @@ class App extends React.Component {
     });
   }
 
+  isMovePresent(i, j) {
+    return (
+      !this.players[0].getMoves().includes(i * 3 + j) &&
+      !this.players[1].getMoves().includes(i * 3 + j)
+    );
+  }
+
   insertMove(i, j) {
     this.setState(state => {
       const { moves, symbols } = state;
-      if (!this.players[0].getMoves().includes(i * 3 + j)) {
+      if (this.isMovePresent(i, j)) {
         symbols.push(symbols.shift());
         this.players.push(this.players.shift());
         moves[i][j] = symbols[0];
+        state.turn = this.players[0].name + " turn";
         this.players[0].addMove(i * 3 + j);
-        this.state.turn = this.players[0].name + " turn";
       }
       if (this.isWin(this.players[0].getMoves())) {
-        alert(this.players[0].name + "won the game");
+        state.turn = this.players[1].name + " won the game";
         return { moves, symbols };
       }
       return { moves, symbols };

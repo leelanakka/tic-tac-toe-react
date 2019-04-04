@@ -4,8 +4,8 @@ import Player from "./Player";
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.player1 = new Player("leela", "X");
-    this.player2 = new Player("prasanth", "O");
+    this.player1 = new Player("player1", "X");
+    this.player2 = new Player("player2", "O");
     this.isGameFinished = false;
     this.winningChances = [
       [0, 1, 2],
